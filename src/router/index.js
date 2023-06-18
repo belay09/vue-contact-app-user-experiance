@@ -1,14 +1,25 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "../components/Home.vue"
-import Description from "../components/Description.vue"
-import Apol from '../components/HomePage/Apol.vue'
+import userTodo from '../components/HomePage/usersTodo.vue'
+import users from '../components/HomePage/Users.vue'
+
 const routes = [
     {
-        path: '/', component: Apol,
+        path: '/',
+        component: users,
     },
+
+
     {
-        path: "/Description", component: Description,
-    }
+        path: '/userTodo/:id',
+        component: userTodo
+
+    },
+    { 
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound', 
+      component: () => import('../components/HomePage/NotFoundView.vue')
+    },
+
 ];
  const router = createRouter({
     history: createWebHistory(),

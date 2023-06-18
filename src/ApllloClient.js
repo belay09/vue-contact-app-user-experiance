@@ -2,8 +2,10 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
-  // You should use an absolute URL here
-  uri: 'https://countries.trevorblades.com/',
+  uri: 'https://todo-wesen.hasura.app/v1/graphql',
+  headers:{
+    "X-Hasura-Admin-Secret":"U3H7pEIRtvxYkFJSBtaNC7Nro1Ygj7aQUo8BqOGgPrymNGs8hbVRxA1Cy0sfbTln"
+  }
 })
 
 // Cache implementation
@@ -14,4 +16,5 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
 })
+
 export default apolloClient;
