@@ -12,10 +12,10 @@ provide('rigister', editing)
 
 <header class="bg-violet-800 py-3">
   <div class="container flex justify-between items-center">
-    <button @click="router.push(`/`)" class="text-black ml-6 font-bold text-4xl hover:bg-violet-900 py-1 px-4 rounded-full">Todos</button>
-    <button @click="editing = true
+    <button @click="router.push(`/`)" class="text-white ml-6 font-bold text-4xl hover:bg-violet-900 py-1 px-4 rounded-full">Contact App</button>
+   <!-- <button @click="editing = true
 " class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-full">register
-    </button>
+    </button>-->
   </div>
 </header>
   <!--<router-view :key="$route.path" />

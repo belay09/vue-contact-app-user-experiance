@@ -1,11 +1,17 @@
 import { createWebHistory, createRouter } from "vue-router";
 import userTodo from '../components/HomePage/usersTodo.vue'
-import users from '../components/HomePage/Users.vue'
-
+import login from '../components/HomePage/login.vue'
+import home from '../components/HomePage/home.vue'
 const routes = [
     {
         path: '/',
-        component: users,
+        component: login,
+    } ,
+    
+    {
+        path: '/home/:id',
+        component: home, 
+        meta: { requiresAuth: true } 
     },
 
 
@@ -25,4 +31,12 @@ const routes = [
     history: createWebHistory(),
     routes,
  });
+ router.beforeEach((to, from, next) => {
+    const isAuthenticated = localStorage.getItem('accessToken');
+    if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+      next('/');
+    } else {
+      next();
+    }
+  });
  export default router;

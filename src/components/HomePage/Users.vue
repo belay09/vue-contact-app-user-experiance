@@ -46,7 +46,7 @@ the user <span class="text-black" >{{userName}}</span> successfully created</div
   import gql from 'graphql-tag'
   import { provideApolloClient } from "@vue/apollo-composable";
   import apolloClient from '../../ApllloClient'
-  import { useMutation } from '@vue/apollo-composable'
+  import { useMutationhost } from '@vue/apollo-composable'
 import {inject} from 'vue'
   import {ref, watch, onMounted } from 'vue'
   const router = useRouter()
@@ -65,18 +65,14 @@ const isDelateBoxVisible =ref(false)
     `)
     const cancelEdit = () => {
         editing.value = false
-
       }
  const update = async (data) => {
     console.log(data);
     editing.value = false;
-
     await addUser({username:data.username})
-
     showSuccessBox()
     await refetch();
     };
-
 const delate = async (data) => {
     await delateUser({id: data.id});
    await refetch();
@@ -130,5 +126,4 @@ mutation MyQuery ($id: Int!){
     `
   ));
     console.log(result.id); // check if there are any errors in the query
-
 </script>

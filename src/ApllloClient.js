@@ -1,20 +1,22 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import { ApolloClient,createHttpLink,InMemoryCache } from "@apollo/client/core";
+const getHeaders = () => {
+    const headers = {};
+    const token = window.localStorage.getItem("accessToken");
+    console.log(token)
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+      console.log(headers.Authorization )
 
-// HTTP connection to the API
+    } 
+    return headers;
+  };
 const httpLink = createHttpLink({
-  uri: 'https://todo-wesen.hasura.app/v1/graphql',
-  headers:{
-    "X-Hasura-Admin-Secret":"U3H7pEIRtvxYkFJSBtaNC7Nro1Ygj7aQUo8BqOGgPrymNGs8hbVRxA1Cy0sfbTln"
-  }
+    uri:'http://localhost:2000/v1/graphql',
+    headers:getHeaders()
 })
-
-// Cache implementation
-const cache = new InMemoryCache()
-
-// Create the apollo client
+// const cache = new InMemoryCache()
 const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
+    link:httpLink,
+    cache:new InMemoryCache()
 })
-
 export default apolloClient;
