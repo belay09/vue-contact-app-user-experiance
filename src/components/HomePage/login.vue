@@ -1,17 +1,17 @@
 <template>
-    <div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="min-h-screen flex flex-col items-center mt-8">
       <div class="max-w-md w-full">
         <div class="flex border-b border-gray-200">
           <button
-            class="py-4 px-6 text-lg text-black bg-gray-100 hover:bg-gray-200 py-2 px-4 ml-2 rounded"
-            :class="activeTab === 'login' ? 'border-b-2 border-blue-500 text-bold' : ''"
+            class="py-4 px-6 text-lg text-black bg-gray-200 hover:bg-gray-300 ml-2 rounded"
+            :class="activeTab === 'login' ? 'border-b-4 border-blue-500 text-bold' : ''"
             @click="activeTab = 'login'"
           >
             Login
           </button>
           <button
-            class="py-4 px-6 text-lg bg-gray-100 hover:bg-gray-200 text-black py-2 px-4 ml-2 rounded"
-            :class="activeTab === 'signup' ? 'border-b-2 border-blue-500 text-bold' : ''"
+            class="py-4 px-6 text-lg bg-gray-200 hover:bg-gray-300 text-black ml-2 rounded"
+            :class="activeTab === 'signup' ? 'border-b-4 border-blue-500 text-bold' : ''"
             @click="activeTab = 'signup'">
             Sign Up
           </button>
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <div v-if="isInfoBoxVisible" class="fixed top-0 right-0 p-4 bg-green-500 text-white rounded-full">
+      <div v-if="isInfoBoxVisible" class="fixed top-0 right-0 p-4 bg-green-500 text-white rounded-full" style="border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
 {{messagee}}
 </div>
     </div>
@@ -91,7 +91,11 @@
   import {ref, watch, onMounted } from 'vue'
   import { loginqueries,signupqueries,findId} from '../../query/query'
   import { useRouter} from "vue-router"
+  import {inject} from "vue"
+  import { useVuelidate } from '@vuelidate/core' 
+  import { required, email, minLength } from 'vuelidate/lib/validators'
 
+  const signout = inject('Member')
   const router = useRouter()
 
   provideApolloClient(apolloClient);
@@ -104,6 +108,7 @@
     const signupPassword=ref ('')
     const messagee=ref ('')
     const isInfoBoxVisible = ref(false);
+    
 function showInfoBox() {
   isInfoBoxVisible.value = true;
 
@@ -117,10 +122,8 @@ function showInfoBox() {
     }
   });
 });
- 
   const create = async (data) => {
     console.log(data)
-
 try {
   const response = await apolloClient.mutate({
     mutation: signupqueries,
@@ -152,6 +155,8 @@ try {
                 }
             })
             console.log(result.data.login.accessToken)
+            console.log(result)
+
             window.localStorage.setItem("accessToken", result.data.login.accessToken);
             //console.log(window.localStorage.getItem("Apollotoken"))
             if (window.localStorage.getItem("accessToken")) {
@@ -163,8 +168,8 @@ try {
                 }
             })
             console.log(responses)
-                    router.push(`/home/${responses.data.users[0].user_id}`);
-                    
+            router.push(`/home/${responses.data.users[0].user_id}`);
+            signout();
                     // @click="router.push(`/userTodo/${users.id}`)
             }
         }
@@ -175,38 +180,20 @@ try {
 
 }
 
-                      // console.log(response.data.Rigister.message)
-            // if(response.data.register.message){
-            //   console.log(messagee)
-            // }
-//     const create = async (data) => {
-//         console.log(data.name);
-//         console.log(data.email);
-//         console.log(data.password);
-
-
-//       await createAcc({name:data.name,email:data.email,password:data.password});
-//       await onDone((result)=>{
-//   console.log(result)
-// })        
-//       await onError(error => {
-//   logErrorMessages(error)
-// })
-// }
-//       const { mutate: createAcc,onError,onDone} = provideApolloClient(apolloClient)(() =>   useMutation(gql`
-// mutation MyQuery($name:String!,$email:String!,$password:String!) {
-//   Rigister(email: $email, name: $name, password: $password) {
-//     message
-//   }
-// } `))
-
-
 
   </script>
   
+
+
+
+
+
+
   <style>
 
-
+.border-b-4 {
+  border-bottom-width: 4px; /* or any other size you want */
+}
   </style>
   
   

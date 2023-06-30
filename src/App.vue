@@ -1,11 +1,20 @@
 <script setup>
 
 import { useRouter} from "vue-router"
-import {provide,ref} from 'vue'
-const router = useRouter()
+import {provide, ref } from 'vue';
+const isActive = ref(false);
 
-const editing = ref(false)
-provide('rigister', editing)
+const router = useRouter()
+function member(){
+   isActive.value = !isActive.value;
+}
+provide('open', isActive);
+provide('Member', member);
+const logout = () => {
+            window.localStorage.removeItem('accessToken');
+            router.push('/');
+            member();
+        }
 </script>
 
 <template>
@@ -13,7 +22,9 @@ provide('rigister', editing)
 <header class="bg-violet-800 py-3">
   <div class="container flex justify-between items-center">
     <button @click="router.push(`/`)" class="text-white ml-6 font-bold text-4xl hover:bg-violet-900 py-1 px-4 rounded-full">Contact App</button>
-   <!-- <button @click="editing = true
+    <button v-if="isActive" @click="logout" class="bg-white hover:bg-teal-700 text-black font-bold py-3 px-6 mr-2 rounded-full">sign out</button>
+
+    <!-- <button @click="editing = true
 " class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-full">register
     </button>-->
   </div>

@@ -147,7 +147,7 @@ const { mutate: insertTodo} = provideApolloClient(apolloClient)(() =>   useMutat
         done
       }
     }`
-);
+); 
 
 const toggle = async (data) => {
         console.log(data);
